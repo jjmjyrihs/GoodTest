@@ -1,0 +1,88 @@
+﻿@{
+
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<table style="border:3px #cccccc solid;" cellpadding="10" border="1" align="center">
+    <tr>
+        <td>訂單編號</td>
+        <td>客戶名稱</td>
+        <td>訂購日期</td>
+        <td>發貨日期</td>
+        <td>修改資料</td>
+        <td>刪除訂單</td>
+    </tr>
+    @for (int i = 0; i < ((List<Model.Data>)ViewBag.GetData).Count; i++)
+    {
+        <tr>
+            <td>@ViewBag.GetData[i].OrderId</td>
+            <td>@ViewBag.GetData[i].CustName</td>
+            <td>@ViewBag.GetData[i].OrderDate</td>
+            <td>@ViewBag.GetData[i].ShippedDate</td>
+            @using (Html.BeginForm("Index", "Update"))
+            {
+                string OrderId = @ViewBag.GetData[i].OrderId;
+                string CustName = ViewBag.GetData[i].CustName;
+                string EmpName = ViewBag.GetData[i].EmpName;
+                string CpyName = ViewBag.GetData[i].CpyName;
+
+                string OrderDate = ViewBag.GetData[i].OrderDate;
+                string RequiredDate = ViewBag.GetData[i].RequiredDate;
+                string ShippedDate = ViewBag.GetData[i].ShippedDate;
+
+                string ShipAddress = ViewBag.GetData[i].ShipAddress;
+                string ShipCity = ViewBag.GetData[i].ShipCity;
+                string ShipRegion = ViewBag.GetData[i].ShipRegion;
+                string ShipPostalCode = ViewBag.GetData[i].ShipPostalCode;
+                string ShipCountry = ViewBag.GetData[i].ShipCountry;                
+                Html.Hidden("OrderId", OrderId);
+                Html.Hidden("CustName", CustName);
+                Html.Hidden("EmpName", EmpName);
+                Html.Hidden("CpyName", CpyName);
+                Html.Hidden("OrderDate", OrderDate);
+                Html.Hidden("RequiredDate", RequiredDate);
+                Html.Hidden("ShippedDate", ShippedDate);
+                Html.Hidden("ShipAddress", ShipAddress);
+                Html.Hidden("ShipCity", ShipCity);
+                Html.Hidden("ShipRegion", ShipRegion);
+                Html.Hidden("ShipPostalCode", ShipPostalCode);
+                Html.Hidden("ShipCountry", ShipCountry);
+                <td>
+                    <input type="hidden" name="OrderId" value=@OrderId />
+                    <input type="hidden" name="CustName" value=@CustName />
+                    <input type="hidden" name="EmpName" value=@EmpName />
+                    <input type="hidden" name="CpyName" value=@CpyName />
+                    <input type="hidden" name="OrderDate" value="@OrderDate" />
+                    <input type="hidden" name="RequiredDate" value="@RequiredDate" />
+                    <input type="hidden" name="ShippedDate" value="@ShippedDate" />
+                    <input type="hidden" name="ShipAddress" value="@ShipAddress" />
+                    <input type="hidden" name="ShipCity" value="@ShipCity" />
+                    <input type="hidden" name="ShipRegion" value="@ShipRegion" />
+                    <input type="hidden" name="ShipPostalCode" value="@ShipPostalCode" />
+                    <input type="hidden" name="ShipCountry" value="@ShipCountry" />
+                    <input type="submit" value="修改" />
+                </td>
+            }
+                @using (Html.BeginForm("Index", "Delete"))
+            {
+                    @Html.Hidden("OrderId",
+                   new
+                   {
+                       OrderId = ViewBag.GetData[i].OrderId,
+                       CustName = ViewBag.GetData[i].CustName,
+                       EmpName = ViewBag.GetData[i].EmpName,
+                       CpyName = ViewBag.GetData[i].CpyName,
+
+                       OrderDate = ViewBag.GetData[i].OrderDate,
+                       RequiredDate = ViewBag.GetData[i].RequiredDate,
+                       ShippedDate = ViewBag.GetData[i].ShippedDate
+                   })
+                <td>
+                    <input type="submit" value="刪除" />
+                </td>
+            }
+        </tr>
+    }
+</table>
